@@ -15,3 +15,17 @@ export const signIn = async (user)=>{
         return error.response;
     }
 } 
+
+
+export const signUp= async (user)=>{
+
+    const URL = "/mba/api/v1/auth/signup";
+
+    try{
+        const response=await axiosInstance.post(URL,user);
+        return response;
+    }
+    catch(error){
+        return error.response;
+    }
+}

@@ -1,7 +1,7 @@
 import {useState,useEffect} from 'react';
 import {Dropdown, DropdownButton, Form,Button} from 'react-bootstrap'; 
 import { useNavigate } from 'react-router-dom';
-import {signIn} from '../../api/auth';
+import {signIn, signUp} from '../../api/auth';
 
 const Auth =()=>{
  
@@ -22,7 +22,7 @@ const Auth =()=>{
     }
 
     useEffect(()=>{
-        if(localStorage.getItem("token")){
+        if(localStorage.getItem("accessToken")){
             //redirect URL 
             redirectURL();
         }
@@ -108,7 +108,7 @@ const Auth =()=>{
         return true;
     }
 
-    const signupFn=(e)=>{
+    const signupFn=async (e)=>{
         e.preventDefault();
 
         const data={
@@ -123,6 +123,14 @@ const Auth =()=>{
             return;
         }
 
+        const response = await signUp(data);
+
+       if(response.status===201){
+           setMessage("Signed Up Successfully");
+           clearState();
+       }else{
+           setErrorMessage(response.data.message);
+       }
     
 
     }
@@ -140,6 +148,21 @@ const Auth =()=>{
         }
 
         const result = await signIn(data);
+
+        if(result.status===200){
+            setMessage("Logged in successfullly");
+
+            const {name,userId,userType,userStatus,accessToken}=result.data;
+
+            localStorage.setItem("name",name);
+            localStorage.setItem("userId",userId);
+            localStorage.setItem("userType",userType);
+            localStorage.setItem("userStatus",userStatus);
+            localStorage.setItem("accessToken",accessToken);
+
+            redirectURL();
+        }
+
         setErrorMessage(result.data.message);
         
      
