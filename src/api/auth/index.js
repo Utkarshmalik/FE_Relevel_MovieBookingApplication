@@ -29,3 +29,15 @@ export const signUp= async (user)=>{
         return error.response;
     }
 }
+
+export const signOut= ()=>{
+
+    localStorage.removeItem("name");
+    localStorage.removeItem("email");
+    localStorage.removeItem("userTypes");
+    localStorage.removeItem("accessToken");
+    localStorage.removeItem("userId");
+    localStorage.removeItem("userStatus");
+
+
+}

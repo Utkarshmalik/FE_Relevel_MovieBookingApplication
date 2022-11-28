@@ -18,7 +18,24 @@ const Auth =()=>{
     const navigate= useNavigate();
 
     const redirectURL=()=>{
-        navigate("/");
+
+        const userType=localStorage.getItem("userTypes");
+
+        if(!userType){
+            setErrorMessage("something went wrong!");
+            return;
+        }
+
+        if(userType==="CUSTOMER"){
+            navigate(-1);
+        }
+        else if(userType==="CLIENT"){
+            navigate("/client");
+        }
+        else{
+            navigate("/admin");
+        }
+
     }
 
     useEffect(()=>{
@@ -152,11 +169,11 @@ const Auth =()=>{
         if(result.status===200){
             setMessage("Logged in successfullly");
 
-            const {name,userId,userType,userStatus,accessToken}=result.data;
+            const {name,userId,userTypes,userStatus,accessToken}=result.data;
 
             localStorage.setItem("name",name);
             localStorage.setItem("userId",userId);
-            localStorage.setItem("userType",userType);
+            localStorage.setItem("userTypes",userTypes);
             localStorage.setItem("userStatus",userStatus);
             localStorage.setItem("accessToken",accessToken);
 
