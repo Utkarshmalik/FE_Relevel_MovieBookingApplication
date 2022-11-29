@@ -40,7 +40,6 @@ const Navbar = ()=>{
                   <Button variant='danger' onClick={()=>onLogout()} >Logout</Button>:
                   <Button variant='danger' onClick={()=>{window.location.href="/login"}} >Login/Signup</Button>
               }
-
      
             </div>
 
