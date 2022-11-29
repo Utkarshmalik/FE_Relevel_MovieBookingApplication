@@ -5,7 +5,7 @@ import Slider from "../../components/slider/Slider";
 import  {getAllMovies} from '../../api/movie';
 import { CSpinner } from "@coreui/react";
 import { HandThumbsUpFill } from "react-bootstrap-icons";
-
+import Footer from "../../components/footer/Footer";
 const LandingPage=()=>{
 
 
@@ -36,6 +36,8 @@ const LandingPage=()=>{
         <div>
             <Navbar/>
 
+            <div style={{minHeight:"85vh"}}>
+
             {getLoader()}
 
 
@@ -58,7 +60,7 @@ const LandingPage=()=>{
                         
 
                         return <div className="col-lg-3 col-xs-6 my-2" >
-                            <Link>
+                            <Link to={`/movie/${movie._id}/details`} >
                             <div className="d-flex justify-content-center align-items-stretch" style={{height:"30rem"}}>
 
                                 <div style={{width:"20rem"}} className="card bg-dark" >
@@ -93,8 +95,9 @@ const LandingPage=()=>{
             
             )
             }
+      </div>
 
-
+        <Footer/>    
         </div>
         
     )
