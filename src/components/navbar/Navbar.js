@@ -1,6 +1,7 @@
 import {Button,FloatingLabel,Form} from 'react-bootstrap';
 import {Link} from 'react-router-dom';
 import {signOut} from '../../api/auth';
+import React, { Component } from 'react';
 
 const onLogout=()=>{
     signOut();

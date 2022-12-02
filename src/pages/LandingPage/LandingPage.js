@@ -6,6 +6,8 @@ import  {getAllMovies} from '../../api/movie';
 import { CSpinner } from "@coreui/react";
 import { HandThumbsUpFill } from "react-bootstrap-icons";
 import Footer from "../../components/footer/Footer";
+import React from "react";
+
 const LandingPage=()=>{
 
 

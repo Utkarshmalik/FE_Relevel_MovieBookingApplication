@@ -2,6 +2,7 @@ import {useState,useEffect} from 'react';
 import {Dropdown, DropdownButton, Form,Button} from 'react-bootstrap'; 
 import { useNavigate } from 'react-router-dom';
 import {signIn, signUp} from '../../api/auth';
+import React from "react";
 
 const Auth =()=>{
  

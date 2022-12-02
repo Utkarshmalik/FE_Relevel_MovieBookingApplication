@@ -2,6 +2,8 @@ import {  BrowserRouter as Router, Routes, Route } from "react-router-dom"
 import AuthPage from "../../pages/authentication/Auth";
 import LandingPage from "../../pages/LandingPage/LandingPage";
 import Admin from "../../pages/admin/Admin";
+import React from "react";
+
 
 const AppRoute=()=>{
 
