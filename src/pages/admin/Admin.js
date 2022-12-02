@@ -10,6 +10,10 @@ const Admin=()=>{
     const [theatersData,setTheatersData]=useState([]);
     const [moviesData,setMoviesData]=useState([]);
     const [usersData,setUsersData]=useState([]);
+    const [showTheaterTable,setShowTheaterTable] = useState(true);
+    const [showMoviesTable,setShowMoviesTable] = useState(false);
+    const [showUsersTable,setShowUsersTable] = useState(false);
+
 
     const fetchTheatersData=()=>{
 
@@ -18,7 +22,7 @@ const Admin=()=>{
         //update the theaters state 
         //update the counterInfo state 
 
-        const datafromAPI=[];
+        const datafromAPI=[1,2,3,4,5,6,7,9,10,1,2,3,4,5,6,7,9,10,1,2,3,4,5,6,7,9,10,1,2,3,4,5,6,7,9,10];
 
         setTheatersData(datafromAPI);
 
@@ -33,7 +37,7 @@ const Admin=()=>{
         //update the movies state 
         //update the counterInfo state 
 
-        const datafromAPI=[];
+        const datafromAPI=[1,2,3,4,5,6,7,9,10];
 
         setMoviesData(datafromAPI);
 
@@ -48,7 +52,7 @@ const Admin=()=>{
         //update the users state 
         //update the counterInfo state 
 
-        const datafromAPI=[];
+        const datafromAPI=[1,2,3,4,5,6,7,9,10,1,2,3,4,5,6,7,9,10];
 
         setUsersData(datafromAPI);
 
@@ -57,10 +61,31 @@ const Admin=()=>{
     }
 
     useEffect(()=>{
-        fetchTheatersData();
-        fetchMoviesData();
-        fetchUsersData();
+        setTimeout(()=>{
+            fetchTheatersData();
+            fetchMoviesData();
+            fetchUsersData();
+        },1000)
+       
     })
+
+    const showMovies=()=>{
+        setShowMoviesTable(true);
+        setShowTheaterTable(false);
+        setShowUsersTable(false);
+    }
+
+    const showTheaters=()=>{
+        setShowMoviesTable(false);
+        setShowTheaterTable(true);
+        setShowUsersTable(false);
+    }
+
+    const showUsers=()=>{
+        setShowMoviesTable(false);
+        setShowTheaterTable(false);
+        setShowUsersTable(true);
+    }
 
 
     return <div>
@@ -80,10 +105,11 @@ const Admin=()=>{
                     className="mb-3 text-white"
                     icon={<i className="bi bi-card-list text-danger"></i>}
                     color={"dark"}
-                    progress={{ color: 'success', value: 75 }}
+                    progress={{ color: 'success', value: counterInfo.theater }}
                     text="Number of Theaters"
                     title="Theaters"
-                    value="60"
+                    value={counterInfo.theater}
+                    onClick={()=>showTheaters()}
         />
                </div>
 
@@ -92,10 +118,11 @@ const Admin=()=>{
                     className="mb-3 text-white"
                     icon={<i className="bi bi-card-list text-danger"></i>}
                     color={"dark"}
-                    progress={{ color: 'success', value: 75 }}
+                    progress={{ color: 'success', value: counterInfo.movie }}
                     text="Number of Movies"
                     title="Movies"
-                    value="60"
+                    value={counterInfo.movie}
+                    onClick={()=>showMovies()}
         />
                </div>
 
@@ -105,14 +132,25 @@ const Admin=()=>{
                     className="mb-3 text-white"
                     icon={<i className="bi bi-card-list text-danger"></i>}
                     color={"dark"}
-                    progress={{ color: 'success', value: 75 }}
+                    progress={{ color: 'success', value:counterInfo.user }}
                     text="Number of Users"
                     title="Users"
-                    value="60"
+                    value={counterInfo.user}
+                    onClick={()=>showUsers()}
+
         />
                </div>
 
            </div>
+
+           <div>
+
+              { showTheaterTable && <h1>Theater Table</h1>}
+              { showMoviesTable && <h1>Movies Table</h1> }
+              { showUsersTable && <h1>Users Table</h1> }
+
+           </div>
+
 
        </div>
 
