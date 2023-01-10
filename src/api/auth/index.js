@@ -7,7 +7,19 @@ export const signIn = async (user)=>{
 
     try{
     const response= await axiosInstance.post(URL,user);
-    console.log(response);
+    
+    if(response.data && response.data.accessToken){
+
+        const {name,userId,email,userTypes,userStatus,accessToken}=response.data;
+
+        localStorage.setItem("name",name);
+        localStorage.setItem("userId",userId);
+        localStorage.setItem("email",email);
+        localStorage.setItem("userTypes",userTypes);
+        localStorage.setItem("userStatus",userStatus);
+        localStorage.setItem("accessToken",accessToken);
+    }
+
     return response; 
    }
     catch(error){

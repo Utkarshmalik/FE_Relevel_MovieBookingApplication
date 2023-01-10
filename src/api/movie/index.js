@@ -12,4 +12,18 @@ export const getAllMovies = async ()=>{
     catch(error){
         return error.response;
     }
-} 
+}
+
+export const removeMovie = async (movie) => {
+
+    const URL = `/mba/api/v1/movies/${movie._id}`;
+
+    try{
+        const response = await axiosInstance.delete(URL,{ headers:{"x-access-token":localStorage.getItem("accessToken")}});
+        return response;
+    }
+    catch(error){
+        throw error;
+    }
+}
+

@@ -92,7 +92,7 @@ const Auth =()=>{
 
     const validateData=(data)=>{
 
-        if(data.userId.length<5 || data.userId.length>10){
+        if(data.userId.length<5 || data.userId.length>20){
             setErrorMessage("UserId should be 5 to 10 characters long");
             return false;
         }

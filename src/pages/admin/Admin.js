@@ -4,6 +4,9 @@ import { CWidgetStatsC } from "@coreui/react";
 import { useEffect } from "react";
 import React from "react";
 import {Delete,Edit} from "@material-ui/icons"
+import { getAllTheaters } from "../../api/theater";
+import { getAllMovies, removeMovie } from "../../api/movie";
+import { getAllUsers } from "../../api/user";
 
 import MaterialTable from "material-table";
 
@@ -19,60 +22,67 @@ const Admin=()=>{
     const [showUsersTable,setShowUsersTable] = useState(false);
 
 
-    const fetchTheatersData=()=>{
+    const fetchTheatersData= async ()=>{
 
         //make an api call 
         //fetch list of theaters 
         //update the theaters state 
         //update the counterInfo state 
 
-        const datafromAPI=[{name:"PVR",city:"Delhi",description:"Multi screen cinema",pinCode:653027},
-        {name:"INOX",city:"Mumbai",description:"Gold cinema",pinCode:4556513}];
+        const theatersData = await getAllTheaters();
 
-        setTheatersData(datafromAPI);
+        const theaters = theatersData.data;
 
-        counterInfo.theater=datafromAPI.length;
+        console.log(theaters);
+
+        setTheatersData(theaters);
+
+        counterInfo.theater=theaters.length;
         setCounterInfo(counterInfo);
     }
 
-    const fetchMoviesData=()=>{
+    const fetchMoviesData=async ()=>{
 
         //make an api call 
         //fetch list of movies 
         //update the movies state 
         //update the counterInfo state 
 
-        const datafromAPI=[1,2,3,4,5,6,7,9,10];
+        const datafromAPI=await getAllMovies();
 
-        setMoviesData(datafromAPI);
+        console.log(datafromAPI);
 
-        counterInfo.movie=datafromAPI.length;
+        const moviesData=datafromAPI.data;
+
+         setMoviesData(moviesData);
+
+        counterInfo.movie=moviesData.length;
         setCounterInfo(counterInfo);
     }
 
-    const fetchUsersData=()=>{
+    const fetchUsersData= async ()=>{
 
         //make an api call 
         //fetch list of users 
         //update the users state 
         //update the counterInfo state 
 
-        const datafromAPI=[1,2,3,4,5,6,7,9,10,1,2,3,4,5,6,7,9,10];
+        const datafromAPI=await getAllUsers();
 
-        setUsersData(datafromAPI);
+        const users=datafromAPI.data;
 
-        counterInfo.user=datafromAPI.length;
+        setUsersData(users);
+
+        counterInfo.user=users.length;
         setCounterInfo(counterInfo);
     }
 
     useEffect(()=>{
-        setTimeout(()=>{
             fetchTheatersData();
             fetchMoviesData();
             fetchUsersData();
-        },1000)
        
-    })
+    },[])
 
     const showMovies=()=>{
         setShowMoviesTable(true);
@@ -91,6 +101,15 @@ const Admin=()=>{
         setShowTheaterTable(false);
         setShowUsersTable(true);
     }
+
+
+
+    const deleteMovie = async (movie) => {
+        await removeMovie(movie);
+        fetchMoviesData();
+    }
+
+
 
 
     return <div>
@@ -152,8 +171,6 @@ const Admin=()=>{
 
               { showTheaterTable && 
               
-              
-              
                <>
                <MaterialTable
                title="THEATERS"
@@ -187,18 +204,82 @@ const Admin=()=>{
                />
 
               
-               </>
-              
-              
-              
-              
+               </>  
               }
 
+              { showMoviesTable && 
+              
+              <>
+              <MaterialTable
+              title="MOVIES"
+              columns={[
+               { title: "Movie Name", field: "name" },
+               { title: "Director", field: "director" },
+               { title: "Release Date", field: "releaseDate"},
+               {title:"Release Status",field:"releaseStatus"}
+             ]}
+               data={moviesData}
+               actions={[
+                   {
+                       icon: Delete,
+                       tooltip: 'Delete Movie',
+                       onClick: (event, rowData) => deleteMovie(rowData)
+                     },
+                     {
+                       icon: Edit,
+                       tooltip: 'Edit Movie',
+                       onClick: (event, rowData) => {
+                         // Do save operation
+                       }
+                     }
+               ]}
+               options={{
+                   actionsColumnIndex: -1
+                 }}
+               
+              />
 
+             
+              </>  
+              
+              }
+              { showUsersTable && 
+              
+              
+              <>
+              <MaterialTable
+              title="USERS"
+              columns={[
+               { title: "USER ID", field: "userId" },
+               { title: "Name", field: "name" },
+               { title: "Email", field: "email"},
+               {title:"Role",field:"userType"}
+             ]}
+               data={usersData}
+               actions={[
+                   {
+                       icon: Delete,
+                       tooltip: 'Delete Movie',
+                       onClick: (event, rowData) => deleteMovie(rowData)
+                     },
+                     {
+                       icon: Edit,
+                       tooltip: 'Edit Movie',
+                       onClick: (event, rowData) => {
+                         // Do save operation
+                       }
+                     }
+               ]}
+               options={{
+                   actionsColumnIndex: -1
+                 }}
+               
+              />
 
+             
+              </>  
 
-              { showMoviesTable && <h1>Movies Table</h1> }
-              { showUsersTable && <h1>Users Table</h1> }
+              }
 
            </div>
 
