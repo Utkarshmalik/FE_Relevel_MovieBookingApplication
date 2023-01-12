@@ -4,11 +4,13 @@ import { CWidgetStatsC } from "@coreui/react";
 import { useEffect } from "react";
 import React from "react";
 import {Delete,Edit} from "@material-ui/icons"
-import { getAllTheaters } from "../../api/theater";
+import { getAllTheaters, getTheaterById } from "../../api/theater";
 import { getAllMovies, removeMovie } from "../../api/movie";
 import { getAllUsers } from "../../api/user";
 
 import MaterialTable from "material-table";
+import { async } from "q";
+import { Modal, Button } from "react-bootstrap";
 
 const Admin=()=>{
 
@@ -20,6 +22,10 @@ const Admin=()=>{
     const [showTheaterTable,setShowTheaterTable] = useState(true);
     const [showMoviesTable,setShowMoviesTable] = useState(false);
     const [showUsersTable,setShowUsersTable] = useState(false);
+
+
+    const [tempTheaterDetails, setTempTheaterDetails] = useState({});
+    const [updateTheaterModal, showUpdateTheaterModal] = useState(false);
 
 
     const fetchTheatersData= async ()=>{
@@ -109,6 +115,30 @@ const Admin=()=>{
         fetchMoviesData();
     }
 
+    const editTheater = async (rowData) => {
+     
+      const theaterId=  rowData._id;
+
+      //make a API call to get theater details by Id
+
+      const theaterDetails = await getTheaterById(theaterId);
+      showUpdateTheaterModal(true);
+      setTempTheaterDetails(theaterDetails.data);
+    }
+
+    const updateTempTheaterDetails= (e)=>{
+
+      if(e.target.name==="name")
+         tempTheaterDetails.name = e.target.value
+      else if(e.target.name==="description")
+      tempTheaterDetails.description=e.target.value
+      else if(e.target.name==="pinCode")
+      tempTheaterDetails.pinCode=e.target.value
+
+      setTempTheaterDetails({...tempTheaterDetails});
+
+    }
+
 
 
 
@@ -192,9 +222,7 @@ const Admin=()=>{
                       {
                         icon: Edit,
                         tooltip: 'Edit Theater',
-                        onClick: (event, rowData) => {
-                          // Do save operation
-                        }
+                        onClick: (event, rowData) => editTheater(rowData)
                       }
                 ]}
                 options={{
@@ -206,6 +234,49 @@ const Admin=()=>{
               
                </>  
               }
+
+              <Modal show={updateTheaterModal}
+              centered
+              onHide={()=>showUpdateTheaterModal(false)}
+              size="lg md"
+              >
+
+                <Modal.Header closeButton>
+                  <Modal.Title> Edit Theater </Modal.Title>
+                </Modal.Header>
+
+                <Modal.Body>
+
+                  <form>
+
+                    <div>
+
+                      <div className="input-group mb-3">
+                        <span> <i className="b bi-pencil"></i>  </span>
+                        <input type="text" name="name" value={tempTheaterDetails.name} placeholder="Theater Name" onChange={updateTempTheaterDetails} />
+                      </div>
+
+                      <div className="input-group my-2">
+                        <span> <i className="b bi-pencil"></i>  </span>
+                        <textarea type="text" name="description" value={tempTheaterDetails.description} placeholder="Theater Description" onChange={updateTempTheaterDetails} />
+                      </div>
+
+                      <div className="input-group mb-3">
+                        <span> <i className="b bi-pencil"></i>  </span>
+                        <input type="text" name="pinCode" value={tempTheaterDetails.pinCode} placeholder="Theater Pincode" onChange={updateTempTheaterDetails} />
+                      </div>
+                      
+
+                      <Button variant="dark"> Save Details </Button>
+
+
+                    </div>
+
+                  </form>
+
+                </Modal.Body>
+
+              </Modal>
 
               { showMoviesTable && 
               

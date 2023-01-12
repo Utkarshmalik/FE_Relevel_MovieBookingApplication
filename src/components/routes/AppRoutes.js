@@ -3,6 +3,7 @@ import AuthPage from "../../pages/authentication/Auth";
 import LandingPage from "../../pages/LandingPage/LandingPage";
 import Admin from "../../pages/admin/Admin";
 import React from "react";
+import MovieDetais from "../../pages/movieDetail/movieDetail";
 
 
 const AppRoute=()=>{
@@ -16,6 +17,8 @@ const AppRoute=()=>{
                 <Route exact path="/" element={<LandingPage/>}  />
 
                 <Route exact path="/admin" element={<Admin/>}  />
+
+                <Route exact path="/movie/:movieId/details" element={<MovieDetais/>} /> 
 
 
             </Routes>
