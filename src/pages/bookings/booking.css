@@ -1,0 +1,39 @@
+.background{
+    background-color: black;
+    height:100vh;
+    text-align: center;
+}
+
+.ShowCase{
+
+    list-style:none;
+    display: flex;
+    justify-content: center;
+    padding:12px;
+    background-color: darkslategray;
+    color:black;
+    border-radius: 5px;
+    width:30%;
+    margin:60px auto;
+
+}
+
+.seat{
+    background-color: gray;
+    width:15px;
+    height: 12px;
+    display: inline-block;
+}
+
+.seatSelected{
+    background-color: red;
+}
+
+.seatOccupied{
+    background-color: white;
+}
+
+
+.ShowCase li{
+    margin: 0px 12px;
+}
