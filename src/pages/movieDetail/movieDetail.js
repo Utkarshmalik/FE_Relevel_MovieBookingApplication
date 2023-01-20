@@ -13,7 +13,6 @@ const MovieDetais = () =>{
     const [movie,setMovie] =useState(null);
     const [isReleased,changeIsReleased] = useState(null);
 
-    console.log(selectedMovie);
 
 
     const init = async ()=>{
